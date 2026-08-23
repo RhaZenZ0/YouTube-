@@ -1,6 +1,6 @@
 pip==26.1.2
 setuptools==70.0.0
-wheel==0.42.0
+wheel==0.46.2
 yt-dlp==2026.7.4
 progressbar~=2.5
 ffmpeg==1.4
