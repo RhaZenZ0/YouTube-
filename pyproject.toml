@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "youtube-downloader"
+version = "2.0.0"
+description = "A small, tested yt-dlp front end for downloading YouTube videos."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE.md" }
+authors = [{ name = "RhaZenZ0" }]
+keywords = ["youtube", "yt-dlp", "downloader"]
+classifiers = [
+    "Environment :: Console",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Multimedia :: Video",
+]
+# yt-dlp itself requires Python 3.10 or later, which sets the floor above.
+dependencies = ["yt-dlp>=2026.7.4"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[project.urls]
+Homepage = "https://github.com/RhaZenZ0/YouTube-"
+"yt-dlp" = "https://github.com/yt-dlp/yt-dlp"
+
+[project.scripts]
+youtube-downloader = "youtube_downloader.cli:main"
+
+[project.gui-scripts]
+youtube-downloader-gui = "youtube_downloader.gui:main"
+
+[tool.setuptools]
+packages = ["youtube_downloader"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "C4", "SIM"]
