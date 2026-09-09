@@ -34,11 +34,25 @@ Thank you for considering contributing to this project! Whether you're fixing a 
 
 ## Code Style
 
-Please follow the existing code style to maintain consistency across the project. If your changes require updating the coding style, please make those adjustments.
+The project is linted with [ruff](https://docs.astral.sh/ruff/); its
+configuration lives in `pyproject.toml`. Run `ruff check .` before pushing.
 
 ## Testing
 
-Ensure that your changes do not break existing functionality. If you're adding a new feature, consider adding relevant tests.
+Install the development dependencies and run the checks before opening a pull
+request. CI runs the same two commands on Python 3.9, 3.11 and 3.13.
+
+```bash
+pip install -r requirements-dev.txt
+pytest
+ruff check .
+```
+
+Tests must not hit the network. `Downloader` takes a `ydl_factory` argument so
+the yt-dlp object can be replaced with a stub; see `tests/test_downloader.py`.
+
+If you're adding a feature, add tests for it. If you're fixing a bug, add a test
+that fails without the fix.
 
 ## Reporting Issues
 

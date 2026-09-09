@@ -1,50 +1,135 @@
-# YouTube Downloader Script
+# YouTube Downloader
 
-This Python script allows users to download YouTube videos and organize them by moving associated thumbnails.
+A small, tested front end for [yt-dlp](https://github.com/yt-dlp/yt-dlp). It
+downloads YouTube videos, embeds metadata, subtitles and thumbnails, and keeps
+thumbnail images in their own folder.
 
 ## Requirements
 
-- Python 3.11 or later
-- yt_dlp library (install using: `pip install yt-dlp` and `pip install -r requirements.txt`)
+- Python 3.9 or later
+- [yt-dlp](https://github.com/yt-dlp/yt-dlp) (installed via `requirements.txt`)
+- **ffmpeg** — a system binary, not a Python package. It is required for
+  merging video and audio, embedding subtitles and thumbnails, and extracting
+  audio.
+
+  | Platform | Command |
+  | --- | --- |
+  | Debian/Ubuntu | `sudo apt install ffmpeg` |
+  | macOS | `brew install ffmpeg` |
+  | Windows | `winget install Gyan.FFmpeg` |
+
+- For the graphical front end, Tkinter (`sudo apt install python3-tk` on
+  Debian/Ubuntu; bundled with the official installers elsewhere).
+
+## Getting started
+
+```bash
+git clone https://github.com/RhaZenZ0/YouTube-.git
+cd YouTube-
+pip install -r requirements.txt
+```
 
 ## Usage
 
-1. Run the script.
-2. Enter a valid YouTube video URL.
-3. Specify the file location to save downloaded files.
-4. Customize video quality, audio format, and subtitles (optional).
-5. The script will download the video, associated subtitles, and thumbnail.
-6. Thumbnails will be moved to a 'thumbnails' folder within the specified location.
+Pass URLs on the command line:
 
-## Author
+```bash
+python YouMain.py "https://youtu.be/VIDEO_ID" -o ~/Videos
+python YouMain.py URL1 URL2 -o ~/Videos --quality 1080p --no-subtitles
+python YouMain.py URL --audio-only --audio-format mp3 -o ~/Music
+```
 
-- **Author**: RhaZenZ0
-
-## Getting Started
-
-1. Clone the repository: `git clone https://github.com/RhaZenZ0/YouTube-.git`
-2. Install the required dependencies: `pip install -r requirements.txt`
-
-## Usage Example
+Run it without URLs for the interactive prompt:
 
 ```bash
 python YouMain.py
 ```
 
-# Configuration
+Or start the graphical front end:
 
-- **DEFAULT_VIDEO_QUALITY**: Default video quality if not specified by the user.
-- **DEFAULT_AUDIO_FORMAT**: Default audio format if not specified by the user.
-- **DEFAULT_SUBTITLES**: Default subtitles inclusion if not specified by the user.
+```bash
+python GUI.py
+```
 
-# Contributing
+Installing the package also provides `youtube-downloader` and
+`youtube-downloader-gui` commands:
 
-Contributions are welcome! Please check the [Contribution Guidelines](CONTRIBUTING.md).
+```bash
+pip install .
+youtube-downloader --help
+```
 
-# License
+### Options
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
+| Flag | Description |
+| --- | --- |
+| `-o`, `--output` | Destination directory (default: current directory). |
+| `-q`, `--quality` | `best`, `2160p`, `1440p`, `1080p`, `720p`, `480p`, `360p`. |
+| `--audio-only` | Download audio only. |
+| `-a`, `--audio-format` | `best`, `mp3`, `m4a`, `opus`, `flac`, `wav`, `vorbis`, `aac`. |
+| `--subtitles` / `--no-subtitles` | Download and embed subtitles (on by default). |
+| `--sub-langs` | Comma-separated subtitle languages (default: `en`). |
+| `--no-thumbnails` | Skip downloading and embedding thumbnails. |
+| `--archive PATH` | Record downloads and skip anything already listed. |
+| `--overwrite` | Overwrite existing files. |
+| `--quiet`, `-v`, `--no-color` | Output control. |
 
-# Acknowledgments
+### Exit codes
 
-Special thanks to [yt_dlp](https://github.com/yt-dlp/yt-dlp) for providing the library used in this script.
+| Code | Meaning |
+| --- | --- |
+| 0 | Every download succeeded. |
+| 1 | At least one download failed. |
+| 2 | Invalid arguments, URL or destination directory. |
+| 130 | Interrupted with Ctrl-C. |
+
+## Output layout
+
+```
+<destination>/
+├── Video Title [VIDEO_ID].mp4
+└── thumbnails/
+    └── Video Title [VIDEO_ID].webp
+```
+
+Thumbnails are written straight into `thumbnails/` by yt-dlp. Files are named
+with the video id so two videos sharing a title do not overwrite each other.
+
+## Project layout
+
+```
+youtube_downloader/
+├── cli.py          console front end
+├── gui.py          Tkinter front end
+├── downloader.py   download orchestration
+├── options.py      user options -> yt-dlp parameters
+├── urls.py         URL validation
+├── result.py       per-URL outcome
+└── colors.py       terminal colours
+tests/              pytest suite
+YouMain.py          entry point for the console front end
+GUI.py              entry point for the graphical front end
+```
+
+## Development
+
+```bash
+pip install -r requirements-dev.txt
+pytest
+ruff check .
+```
+
+Tests do not touch the network: the yt-dlp object is injected, so the option
+building and error handling are exercised directly.
+
+## Contributing
+
+Contributions are welcome. See the [contribution guidelines](CONTRIBUTING.md).
+
+## License
+
+MIT — see [LICENSE.md](LICENSE.md).
+
+## Acknowledgments
+
+Built on [yt-dlp](https://github.com/yt-dlp/yt-dlp), which does all the real work.

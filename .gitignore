@@ -11,3 +11,23 @@
 /.idea/YouTube-Downloader.iml
 /.idea/.gitignore
 /.idea/YouTube-.iml
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Downloads
+/thumbnails/
+*.part
+*.ytdl
+
+# Editors
+.idea/
+.vscode/

@@ -1,6 +1,13 @@
-pip==26.1.2
-setuptools==83.0.0
-wheel==0.46.2
-yt-dlp==2026.7.4
-progressbar~=2.5
-ffmpeg==1.4
+# Runtime dependency. yt-dlp is the official project at
+# https://github.com/yt-dlp/yt-dlp; the PyPI package is published from there.
+# Track it with a lower bound: YouTube changes often and pinning an exact
+# version leaves downloads broken until the pin is bumped.
+yt-dlp>=2026.7.4
+#
+# ffmpeg is NOT a Python package. It is a system binary and is required for
+# merging streams, embedding subtitles/thumbnails and audio extraction.
+#   Debian/Ubuntu: sudo apt install ffmpeg
+#   macOS:         brew install ffmpeg
+#   Windows:       winget install Gyan.FFmpeg
+# The previous `ffmpeg==1.4` pin here installed an unrelated third-party
+# package from PyPI that does not provide ffmpeg.
