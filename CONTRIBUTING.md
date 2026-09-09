@@ -40,7 +40,7 @@ configuration lives in `pyproject.toml`. Run `ruff check .` before pushing.
 ## Testing
 
 Install the development dependencies and run the checks before opening a pull
-request. CI runs the same two commands on Python 3.9, 3.11 and 3.13.
+request. CI runs the same two commands on Python 3.10, 3.11 and 3.13.
 
 ```bash
 pip install -r requirements-dev.txt

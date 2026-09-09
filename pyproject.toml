@@ -7,7 +7,7 @@ name = "youtube-downloader"
 version = "2.0.0"
 description = "A small, tested yt-dlp front end for downloading YouTube videos."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 license = { file = "LICENSE.md" }
 authors = [{ name = "RhaZenZ0" }]
 keywords = ["youtube", "yt-dlp", "downloader"]
@@ -17,6 +17,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Topic :: Multimedia :: Video",
 ]
+# yt-dlp itself requires Python 3.10 or later, which sets the floor above.
 dependencies = ["yt-dlp>=2026.7.4"]
 
 [project.optional-dependencies]
@@ -41,7 +42,7 @@ addopts = "-q"
 
 [tool.ruff]
 line-length = 110
-target-version = "py39"
+target-version = "py310"
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "B", "C4", "SIM"]

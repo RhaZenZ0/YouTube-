@@ -6,7 +6,7 @@ thumbnail images in their own folder.
 
 ## Requirements
 
-- Python 3.9 or later
+- Python 3.10 or later
 - [yt-dlp](https://github.com/yt-dlp/yt-dlp) (installed via `requirements.txt`)
 - **ffmpeg** — a system binary, not a Python package. It is required for
   merging video and audio, embedding subtitles and thumbnails, and extracting
